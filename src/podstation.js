@@ -1,18 +1,22 @@
-import $ from 'jquery';
-import podStationApp from './ui/ng/podstationApp';
+// Importing required modules and styles
+import $ from 'jquery'; // Importing jQuery
+import podStationApp from './ui/ng/podstationApp'; // Importing podStationApp module
 
-import './podstation.css';
-import 'font-awesome/css/font-awesome.css';
-import AnalyticsService from './reuse/ng/services/analyticsService';
+import './podstation.css'; // Importing podStation CSS
+import 'font-awesome/css/font-awesome.css'; // Importing Font Awesome CSS
+import AnalyticsService from './reuse/ng/services/analyticsService'; // Importing AnalyticsService
 
-$(document).ready(function() {
-	$('#updateAll').click(function(event) {
-		event.preventDefault();
+// Waiting for the document to be ready
+$(document).ready(function () {
+	// Adding click event listener to 'updateAll' button
+	$('#updateAll').click(function (event) {
+		event.preventDefault(); // Preventing default action
 
-		chrome.runtime.getBackgroundPage(function(bgPage) {
-			let analyticsService = new AnalyticsService();
-			analyticsService.trackEvent('feed', 'user_update_all');
-			bgPage.podcastManager.updatePodcast('');
+		// Getting the background page
+		chrome.runtime.getBackgroundPage(function (bgPage) {
+			let analyticsService = new AnalyticsService(); // Creating an instance of AnalyticsService
+			analyticsService.trackEvent('feed', 'user_update_all'); // Tracking the event
+			bgPage.podcastManager.updatePodcast(''); // Updating the podcast
 		});
 	});
 });

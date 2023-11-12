@@ -1,72 +1,97 @@
 <!DOCTYPE html>
-<html ng-app="podstationApp">
-	<head>
-		<title>podStation</title>
-	</head>
-	<body>
-		<div id="header" ng-controller="headerController">
-			<div id="headerRight">
-				<input type="text" id="entryBox" placeholder="{{'search_placeholder' | chrome_i18n }}" ng-model="entry" ng-keypress="editBoxKeyPress($event)"/>
-				<input type="button" ng-click="searchPodcast()" value="{{'search_button' | chrome_i18n }}"/>
-				<input type="button" id="addRSS" ng-click="addPodcast()" value="{{'add_feed' | chrome_i18n }}"/>
-				<a href="javascript:void(0)" id="colorScheme" ng-click="toggleColorScheme()" title="{{'color_scheme' | chrome_i18n }}"><i class="fa fa-adjust fa-lg"></i></a>
-			</div>
-			<h1 id="mainTitle"><i class="fa fa-rss" aria-hidden="true"></i> podStation</h1>
+<html ng-app="podstationApp"> <!-- AngularJS application with the name 'podstationApp' -->
+
+<head>
+	<title>podStation</title> <!-- Title of the webpage -->
+</head>
+
+<body>
+	<!-- Header section controlled by the 'headerController' -->
+	<div id="header" ng-controller="headerController">
+		<div id="headerRight">
+			<!-- Input field for searching podcasts -->
+			<input type="text" id="entryBox" placeholder="{{'search_placeholder' | chrome_i18n }}" ng-model="entry"
+				ng-keypress="editBoxKeyPress($event)" />
+			<!-- Button for initiating podcast search -->
+			<input type="button" ng-click="searchPodcast()" value="{{'search_button' | chrome_i18n }}" />
+			<!-- Button for adding a new podcast -->
+			<input type="button" id="addRSS" ng-click="addPodcast()" value="{{'add_feed' | chrome_i18n }}" />
+			<!-- Button for toggling color scheme -->
+			<a href="javascript:void(0)" id="colorScheme" ng-click="toggleColorScheme()"
+				title="{{'color_scheme' | chrome_i18n }}"><i class="fa fa-adjust fa-lg"></i></a>
 		</div>
-		<div ng-include="'ui/ng/partials/notifications.html'"></div>
-		<ps-episode-player id="audioPlayer"></ps-episode-player>
-		<ps-episode-player mini-player="true"></ps-episode-player>
-		<div ng-include="'ui/ng/partials/playlist.html'"></div>
-		<div ng-controller="adController as ad">
-			<div ng-if="ad.showBanner" id="adBanner">
-				<div class="adTitle"><a href="https://github.com/podStation/podStation/blob/master/docs/blog/2021-02-14-ad-in-podstation.md" target="_blank">{{'learn_more' | chrome_i18n}}</a></div>
-				<div class="adButton"><a href="" ng-click="ad.dismiss()">{{'dismiss' | chrome_i18n}}</a></div>
-				<a href="https://jointoucan.com/partners/podstation" target="_blank"><img src="images/Toucan-banner.svg"></a>
-			</div>
+		<!-- Main title of the webpage -->
+		<h1 id="mainTitle"><i class="fa fa-rss" aria-hidden="true"></i> podStation</h1>
+	</div>
+	<!-- Section for displaying notifications -->
+	<div ng-include="'ui/ng/partials/notifications.html'"></div>
+	<!-- Main podcast player -->
+	<ps-episode-player id="audioPlayer"></ps-episode-player>
+	<!-- Mini podcast player -->
+	<ps-episode-player mini-player="true"></ps-episode-player>
+	<!-- Section for displaying the playlist -->
+	<div ng-include="'ui/ng/partials/playlist.html'"></div>
+	<!-- Ad section controlled by the 'adController' -->
+	<div ng-controller="adController as ad">
+		<div ng-if="ad.showBanner" id="adBanner">
+			<!-- Link for learning more about the ad -->
+			<div class="adTitle"><a
+					href="https://github.com/podStation/podStation/blob/master/docs/blog/2021-02-14-ad-in-podstation.md"
+					target="_blank">{{'learn_more' | chrome_i18n}}</a></div>
+			<!-- Button for dismissing the ad -->
+			<div class="adButton"><a href="" ng-click="ad.dismiss()">{{'dismiss' | chrome_i18n}}</a></div>
+			<!-- Displaying the ad banner -->
+			<a href="https://jointoucan.com/partners/podstation" target="_blank"><img
+					src="images/Toucan-banner.svg"></a>
 		</div>
-		<div id="contentBoxOut">
-			<div id="contentBoxMenu" ng-controller="menuController">
-				<a href="#!/Podcasts">Podcasts</a> |
-				<a href="#!/LastEpisodes">{{'last_episodes' | chrome_i18n }}</a> |
-				<a href="#!/Options">{{'options' | chrome_i18n }}</a> |
-				<a class="icon" href="#" id="updateAll" title="{{'update_all' | chrome_i18n }}">
-					<i class="fa fa-refresh"></i>
-				</a> |
-				<a class="icon" href="#!/InProgress" title="{{'in_progress' | chrome_i18n }}">
-					<i class="fa fa-tasks"></i>
-				</a> |
-				<a class="icon" href="" ng-click="togglePlaylistVisibility()" title="{{'toggle_playlist' | chrome_i18n }}">
-					<i class="fa fa-list"></i>
-				</a> |
-				<a class="icon" href="" ng-click="importOpml()" title="{{'import_opml' | chrome_i18n }}">
-					<i class="fa fa-upload"></i>
-				</a> |
-				<a class="icon" href="" ng-click="exportOpml()" title="{{'export_opml' | chrome_i18n }}">
-					<i class="fa fa-download"></i>
-				</a> |
-				<a class="icon icon_red" href="https://chrome.google.com/webstore/detail/podstation-podcast-player/bpcagekijmfcocgjlnnhpdogbplajjfn/reviews" target="_blank" title="{{'review' | chrome_i18n }}">
-					<i class="fa fa-heart"></i>
-				</a> |
-				<a class="icon icon_facebook" href="https://www.facebook.com/podStation/" target="_blank" title="Facebook">
-					<i class="fa fa-facebook-official"></i>
-				</a> |
-				<a class="icon icon_twitter" href="https://www.twitter.com/podStation_app/" target="_blank" title="{{'follow_on_twitter' | chrome_i18n }}">
-					<i class="fa fa-twitter"></i>
-				</a> |
-				<a class="icon" href="https://github.com/podStation/podStation" target="_blank" title="{{'fork_it' | chrome_i18n }}">
-					<i class="fa fa-code-fork"></i>
-				</a> |
-				<a class="icon" href="https://github.com/podStation/podStation#support-and-contact" target="_blank" title="{{'contact_and_support' | chrome_i18n }}">
-					<i class="fa fa-envelope"></i>
-				</a> |
+	</div>
+	<!-- Outer content box -->
+	<div id="contentBoxOut">
+		<!-- Menu controlled by the 'menuController' -->
+		<div id="contentBoxMenu" ng-controller="menuController">
+			<!-- Navigation links and icons -->
+			<a href="#!/Podcasts">Podcasts</a> |
+			<a href="#!/LastEpisodes">{{'last_episodes' | chrome_i18n }}</a> |
+			<a href="#!/Options">{{'options' | chrome_i18n }}</a> |
+			<a class="icon" href="#" id="updateAll" title="{{'update_all' | chrome_i18n }}"><i
+					class="fa fa-refresh"></i></a> |
+			<a class="icon" href="#!/InProgress" title="{{'in_progress' | chrome_i18n }}"><i
+					class="fa fa-tasks"></i></a> |
+			<a class="icon" href="" ng-click="togglePlaylistVisibility()"
+				title="{{'toggle_playlist' | chrome_i18n }}"><i class="fa fa-list"></i></a> |
+			<a class="icon" href="" ng-click="importOpml()" title="{{'import_opml' | chrome_i18n }}"><i
+					class="fa fa-upload"></i></a> |
+			<a class="icon" href="" ng-click="exportOpml()" title="{{'export_opml' | chrome_i18n }}"><i
+					class="fa fa-download"></i></a> |
+
+			<a class="icon icon_red"
+				href="https://chrome.google.com/webstore/detail/podstation-podcast-player/bpcagekijmfcocgjlnnhpdogbplajjfn/reviews"
+				target="_blank" title="{{'review' | chrome_i18n }}"><i class="fa fa-heart"></i></a> |
+			<!--
+				<a class="icon icon_facebook" href="https://www.facebook.com/podStation/" target="_blank"
+					title="Facebook"><i class="fa fa-facebook-official"></i></a> |
+				<a class="icon icon_twitter" href="https://www.twitter.com/podStation_app/" target="_blank"
+					title="{{'follow_on_twitter' | chrome_i18n }}"><i class="fa fa-twitter"></i></a> |
+				<a class="icon" href="https://github.com/podStation/podStation" target="_blank"
+					title="{{'fork_it' | chrome_i18n }}"><i class="fa fa-code-fork"></i></a> |
+				<a class="icon" href="https://github.com/podStation/podStation#support-and-contact" target="_blank"
+					title="{{'contact_and_support' | chrome_i18n }}"><i class="fa fa-envelope"></i></a> |
 				<a class="icon" href="#!/About" title="{{'about_tb' | chrome_i18n }}"><i class="fa fa-question"></i></a> |
-				<a class="funditBtn" href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DEQFCARLYBXXE" target="_blank">
+				-->
+			<!-- Donation button 
+				<a class="funditBtn"
+					href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=DEQFCARLYBXXE"
+					target="_blank">
 					<i class="fa fa-dollar"></i> {{ 'fund_it' | chrome_i18n}}
 				</a>
-				<input id="opmlUploader" type="file" style="display: none" accept=".opml">
-			</div>
-			<div id="contentBoxIn" ng-view>
-			<div>
-		<div>
-	</body>
+				-->
+			<!-- Hidden input for uploading OPML files -->
+			<input id="opmlUploader" type="file" style="display: none" accept=".opml">
+		</div>
+		<!-- Content box where views are loaded -->
+		<div id="contentBoxIn" ng-view>
+		</div>
+	</div>
+</body>
+
 </html>
